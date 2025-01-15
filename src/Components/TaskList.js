@@ -1,20 +1,26 @@
+// src/Components/TaskList.js
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { removeTask } from '../redux/tasksSlice';
 
-const TaskList = () => {
-  const tasks = useSelector((state) => state.tasks);
-  const dispatch = useDispatch();
-
+const TaskList = ({ tasks, toggleTaskStatus, toggleTaskImportance }) => {
   return (
     <div className="task-list">
-      <h2>Your Tasks</h2>
-      {tasks.map((task, index) => (
-        <div key={index} className="task">
-          <span>{task.text}</span>
-          <button onClick={() => dispatch(removeTask(index))}>Delete</button>
-        </div>
-      ))}
+      <ul>
+        {tasks.length === 0 ? (
+          <li>No tasks available</li>
+        ) : (
+          tasks.map((task) => (
+            <li key={task.id} className={task.status === "completed" ? "completed" : "planned"}>
+              <span>{task.name}</span>
+              <button onClick={() => toggleTaskStatus(task.id)}>
+                {task.status === "planned" ? "Mark as Completed" : "Mark as Planned"}
+              </button>
+              <button onClick={() => toggleTaskImportance(task.id)}>
+                {task.important ? "Mark as Not Important" : "Mark as Important"}
+              </button>
+            </li>
+          ))
+        )}
+      </ul>
     </div>
   );
 };

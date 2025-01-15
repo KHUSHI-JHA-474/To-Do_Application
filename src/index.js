@@ -1,13 +1,16 @@
+// src/index.js or src/main.js
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
-import App from './App';
-import './styles.css';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom'; // Import BrowserRouter
+import App from './App'; // Your main App component
+import './styles.css'; // Ensure this file exists
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
+// Ensure only one BrowserRouter is wrapping your entire app
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <BrowserRouter> {/* Wrap the whole App component with BrowserRouter */}
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
 );
